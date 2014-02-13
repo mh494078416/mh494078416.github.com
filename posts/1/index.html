@@ -1,8 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>项目中资源文件的获取</title>
+    
+    <meta name="author" content="mahang">
 
----
-layout : default
----
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
+    <!-- Le styles -->
+    <link href="/assets/twitter/stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+    <!-- Le fav and touch icons -->
+    <!-- Update these with your own images
+      <link rel="shortcut icon" href="images/favicon.ico">
+      <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+      <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+      <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+</head>
+
+<body>
+<a href="https://github.com/mh494078416"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="/">树莓派的奇幻漂流</a>
+            <ul class="nav">
+                
+                
+
+
+  <li><a href="/archive">Archive</a></li>
+
+
+                
+                
+
+
+  <li><a href="/tags">Tags</a></li>
+
+
+                
+                
+
+
+  <li><a href="/categories">Categories</a></li>
+
+
+                
+                
+
+
+  <li><a href="/pages">Pages</a></li>
+
+
+                
+                
+
+
+  <li><a href="/about">About Me</a></li>
+
+
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="content">
+        
 <div class="page-header">
   <h1>Blogs</h1>
 </div>
@@ -28,6 +103,38 @@ layout : default
     </div>
 
 
+    
+      <div class="post">
+        <h1 class="title"><a href="/hbase/hbase-orm%E4%B8%AD%E9%97%B4%E5%B1%82hbasedao/">hbase orm中间层hbasedao</a> <span class="date">2014-01-03</span></h1>
+
+        <h2>背景</h2>
+
+<p>hbase是分布式的kv(key value)存储系统，hbase提供的针对底层数据的操作也是基于kv维度的，使用起来更像是Map的操作方式。但是上层业务应用一般是采用的面向对象的设计，这就导致了使用hbase的底层api必须要写很多的代码来做KV原始数据到上层业务对象的转化。</p>
+
+<p>使用关系型数据库如MySQL，也会遇到关系型数据跟对象之间的适配问题，所以出现了很多成熟的做对象关系映射的产品，像<code>hibernate</code>和<code>mybatis</code>。</p>
+
+<p>hbase当然也需要一个类似的东西，来做对象到kv数据的适配，这样上层应用可以继续专注于上层 面向对象的方式的开发，而不用直接操作kv数据，提高工作效率。</p>
+
+<h2>hbase使用场景</h2>
+
+<p>hbase要解决的问题是海量数据的分布式存储，传统数据库如mysql解决这个问题也是有办法的，可以通过分库分表的方式做到。
+所以，hbase和mysql的竞争点是在需要mysql分库分表的情况。下面以一个很常见的场景举例，来看之前数据存储使用mysql的场景，迁移hbase上的过程。</p>
+
+<blockquote>
+<p>问题描述：用户的基本信息（包括：用户头像，上次登录时间），好友关系（正向 我关注的人，反向关注我的人）</p>
+</blockquote>
+
+<h4>mysql的方式：</h4>
+
+<ul>
+<li>用户信息表</li>
+</ul>
+
+
+        <div class="more">
+          <a href="/hbase/hbase-orm%E4%B8%AD%E9%97%B4%E5%B1%82hbasedao/" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
     
       <div class="post">
         <h1 class="title"><a href="/mac/os-x10.9%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E5%8D%87%E7%BA%A7svn1.8/">os x10.9源码编译升级svn1.8</a> <span class="date">2013-10-10</span></h1>
@@ -370,37 +477,6 @@ func randGenerator() chan int {
         </div>
       </div>
     
-      <div class="post">
-        <h1 class="title"><a href="/go/idea-intellij-go-%22can%E2%80%99t-find-import%22-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">idea intellij go &#34;can’t find import&#34; 解决方法</a> <span class="date">2013-07-04</span></h1>
-
-        <p>尝试重多golang的ide，最后发现intellij目前做的完成度最高</p>
-
-<p>eclipse go 不能进行包、类、方法等的跳转，这点是无法忍受的，所以果断换成intellij</p>
-
-<p>但是发现在intellij里面不能import <code>$GOPATH</code>里src下的包，网上搜索了很长时间，
-在这里找到解决方法：<a href="https://github.com/mtoader/google-go-lang-idea-plugin/issues/224">https://github.com/mtoader/google-go-lang-idea-plugin/issues/224</a></p>
-
-<blockquote>
-<pre><code>Looking through the source, it seems that the plugin doesn't use the $GOPATH (to be fair, I think earlier Go docs didn't make the distinction between using $GOPATH and $GOROOT quite as clear as they do now).
-In setting up the plugin you have to 
-1.) create symlinks for all of the imported package directories in your $GOPATH:
-    a. $GOROOT/src/pkg/ -&gt; $GOPATH/src
-    ex. from within $GOROOT/src/pkg, ln -s $GOPATH/src/github.com
-    b. $GOROOT/pkg/target/ -&gt; $GOPATH/pkg/target/
-    ex. from within $GOROOT/pkg/darwin_amd64, ln -s $GOPATH/pkg/darwin_amd64/code.google.com
-2.) you MUST set up a source directory when creating the project (however, it can be an empty string, which will then cause the wizard to prompt you that it will set the project root as the source directory)
-</code></pre>
-</blockquote>
-
-<p>附上一片比较完整搭建go环境的博文：
-<a href="http://icfly.cn/archives/2013/05/golang-ide.html">http://icfly.cn/archives/2013/05/golang-ide.html</a></p>
-
-
-        <div class="more">
-          <a href="/go/idea-intellij-go-%22can%E2%80%99t-find-import%22-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="btn btn-small">阅读全文</a>
-        </div>
-      </div>
-    
 
     <div class="pagination">
       <ul>
@@ -420,3 +496,35 @@ In setting up the plugin you have to
   </div>
 </div>
 
+
+    </div>
+
+    <footer>
+        <p>&copy; mahang 2013
+            with help from <a href="http://github.com/wendal/gor" target="_blank" title="Gor -- Fast Blog">Gor</a>
+            and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+            and Idea from <a href="http://ruhoh.com" target="_blank" title="The Definitive Technical Blogging Framework">ruhoh</a>
+	</p>
+	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cdiv align='center' id='cnzz_stat_icon_1000037964'%3E%3C/div%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1000037964%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+    </footer>
+
+</div> <!-- /container -->
+
+<script src="/assets/twitter/javascripts/prettify.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+<script>
+    var _gaq=[['_setAccount','UA-123-12'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+
+</body>
+</html>

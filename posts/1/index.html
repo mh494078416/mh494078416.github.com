@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>项目中资源文件的获取</title>
+    
+    <meta name="author" content="mahang">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/twitter/stylesheets/bootstrap.min.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/stylesheets/style.css" type="text/css" rel="stylesheet" media="all">
+<link href="/assets/twitter/widgets/google_prettify/stylesheets/twitter-bootstrap.css" type="text/css" rel="stylesheet" media="all">
+
+
+    <!-- Le fav and touch icons -->
+    <!-- Update these with your own images
+      <link rel="shortcut icon" href="images/favicon.ico">
+      <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+      <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+      <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    -->
+</head>
+
+<body>
+<a href="https://github.com/mh494078416"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="/">树莓派的奇幻漂流</a>
+            <ul class="nav">
+                
+                
+
+
+  <li><a href="/archive">Archive</a></li>
+
+
+                
+                
+
+
+  <li><a href="/tags">Tags</a></li>
+
+
+                
+                
+
+
+  <li><a href="/categories">Categories</a></li>
+
+
+                
+                
+
+
+  <li><a href="/pages">Pages</a></li>
+
+
+                
+                
+
+
+  <li><a href="/about">About Me</a></li>
+
+
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="content">
+        
+<div class="page-header">
+  <h1>Blogs</h1>
+</div>
+
+
+<div class="row">
+  <div class="span12">
+
+    <div class="pagination">
+      <ul>
+      
+        
+          <li class="active"><a href="/posts/1/">1</a></li>
+        
+        
+      
+        
+        
+          <li><a href="/posts/2/">2</a></li>
+        
+      
+      </ul>
+    </div>
+
+
+    
+      <div class="post">
+        <h1 class="title"><a href="/scala/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E7%9A%84%E6%9F%AF%E9%87%8C%E5%8C%96%E5%90%AB%E4%B9%89/">函数式编程语言的柯里化含义</a> <span class="date">2014-07-07</span></h1>
+
+        <p>函数式编程语言的几个特征中比较难于理解的就是柯里化了，下面一个简单的例子帮助理解一下，一句话概括的话就是：
+    柯里化使函数式编程语言具有动态创建函数的能力。</p>
+
+<pre><code>// 普通过程式编程语言的写法
+def fn1(x: Int, y: Int) = x + y
+// 函数式编程语言的写法
+def fn2(x: Int)(y: Int) = x + y
+
+fn1(1, 2)
+fn2(1)(2)
+
+// 但是函数式编程语言具有柯里化的特性，允许动态的创建一个函数，比如
+var add10 = fn2(10)(_)
+add10(3)
+
+// 函数式编程的柯里化其实相当于实现了数据公式：fa(x, y) = fb(x)(y)，把函数fa拆解成两个函数fb(x)和fb(x)(y)
+</code></pre>
+
+
+        <div class="more">
+          <a href="/scala/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E7%9A%84%E6%9F%AF%E9%87%8C%E5%8C%96%E5%90%AB%E4%B9%89/" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
+        <h1 class="title"><a href="/java/%E8%AE%A1%E7%AE%97%E5%9C%B0%E5%9B%BE%E4%B8%8A%E4%B8%80%E4%B8%AA%E7%82%B9%E9%99%84%E8%BF%91%E7%9A%84%E7%82%B9%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95%E5%AE%9E%E8%B7%B5/">计算地图上一个点附近的点的两种方法实践</a> <span class="date">2014-02-13</span></h1>
+
+        <p>随着移动终端的普及，LBS的应用慢慢增多起来，比如附近的人功能成了陌陌微信等im的标配，以及大众点评的附近的餐馆、酒店等。</p>
+
+<p>通过一个点的gps信息找出它附近的点，就是上面这样功能的核心。通常有两种实现方法，各有优缺点，需要根据场景不同选择适合的。</p>
+
+<h3>一、geohash + sql数据库</h3>
+
+<ol>
+<li><p>首先按照地址的经纬度按照下图的方法得出0101的编码，编码位数越多，描述地址的精确度越高。具体方法是：先计算维度，范围(18.09, 53.33)平分成两个区间(18.09, 35.71)、(35.71, 53.33)， 如果目标纬度位于前一个区间，则编码为0，否则编码为1。由于39.92324属于(35.71, 53.33)，所以取编码为1。然后再将(35.71, 53.33)分成 (35.71, 44.52), (44.52, 53.33)两个区间，而39.92324位于(35.71, 44.52)，所以编码为0。以此类推，直到精度符合要求为止，得到纬度编码为1011 1000 1100 0111 1001。
+<img src="/assets/media/geohash.png"></img></p></li>
+
+<li><p>然后再对得出的类似这种形式的地址<code>11100 11101 00100 01111 00000 01101 01011 00001</code>进行base32编码，用0-9、b-z（去掉a, i, l, o）这32个字母进行base32编码，得到(39.92324, 116.3906)的编码为wx4g0ec1，这个就是地址的geohash值。</p></li>
+
+<li><p>可以把编码之后的地址数据放入数据库，以geohash字段建索引。</p></li>
+
+<li><p>查找一个点附近的店就可以通过这种方式，sql数据库：<code>SELECT * FROM address WHERE geohash LIKE 'wx4g0%'</code>。wx4g0代表的是地图上一个正方形的块，如下图阴影选择的区域。</p>
+
+<p><img src="/assets/media/geoselect.png"></img></p></li>
+</ol>
+
+<h3>二、经度、维度取交集 + 内存排序</h3>
+
+<ol>
+<li>保存地址数据的时候，冗余一个城市的字段</li>
+<li>系统启动时加载所有的地址点到内存</li>
+<li>以城市对数据分片，每个城市内分别建立经度、纬度上地址点的索引，使用TreeMap<Double, Point>保存</li>
+<li>给出一个经度120.024082，计算附近1000m以内的点，比如：事先计算好的1000m距离的经度差是0.01042，那么就可以查询在[120.018872, 120.029292]范围内的点，同样的方法，查询到纬度距离1000米以内的点</li>
+<li>然后取两个集合的交集，如果取得的交集是空，那么可以重复步骤2，扩大查找范围到1000m*5，再次查询经度、纬度上的点，然后再取交集</li>
+<li>取得交集后的点就是图中以红点为中心，正方型圈出来的点，然后计算与红点的具体距离，距离计算公式可以参考<a href="http://wenku.baidu.com/view/3d69930d76c66137ee061999.html">这篇文章</a>里的算法</li>
+<li>然后对交集里的点按距离排序，就能够得到按照距离排序后的点了</li>
+<li>为什么按照城市分片是因为，如果在全国范围内构件经纬度的索引，查询一个点附近的点，这个跨度就会很大，可能1000m内纬度距离内的点就会遍布在内蒙古和海南，这就会把距离很远的点也列入附近的点考虑的范围，实际取交集后重合的点却很少。所以一种优化的做法是，按照城市的维度分别构建经度、纬度的map。给出一个点时首先根据经纬度计算出它所在的城市，然后在城市的范围内查找，这样取交集成功的机会就会大很多，查找效率会提高不少</li>
+</ol>
+
+
+        <div class="more">
+          <a href="/java/%E8%AE%A1%E7%AE%97%E5%9C%B0%E5%9B%BE%E4%B8%8A%E4%B8%80%E4%B8%AA%E7%82%B9%E9%99%84%E8%BF%91%E7%9A%84%E7%82%B9%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95%E5%AE%9E%E8%B7%B5/" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
+        <h1 class="title"><a href="/hbase/hbase-orm%E4%B8%AD%E9%97%B4%E5%B1%82hbasedao/">hbase orm中间层hbasedao</a> <span class="date">2014-01-03</span></h1>
+
+        <h2>背景</h2>
+
+<p>hbase是分布式的kv(key value)存储系统，hbase提供的针对底层数据的操作也是基于kv维度的，使用起来更像是Map的操作方式。但是上层业务应用一般是采用的面向对象的设计，这就导致了使用hbase的底层api必须要写很多的代码来做KV原始数据到上层业务对象的转化。</p>
+
+<p>使用关系型数据库如MySQL，也会遇到关系型数据跟对象之间的适配问题，所以出现了很多成熟的做对象关系映射的产品，像<code>hibernate</code>和<code>mybatis</code>。</p>
+
+<p>hbase当然也需要一个类似的东西，来做对象到kv数据的适配，这样上层应用可以继续专注于上层 面向对象的方式的开发，而不用直接操作kv数据，提高工作效率。</p>
+
+<h2>hbase使用场景</h2>
+
+<p>hbase要解决的问题是海量数据的分布式存储，传统数据库如mysql解决这个问题也是有办法的，可以通过分库分表的方式做到。
+所以，hbase和mysql的竞争点是在需要mysql分库分表的情况。下面以一个很常见的场景举例，来看之前数据存储使用mysql的场景，迁移hbase上的过程。</p>
+
+<blockquote>
+<p>问题描述：用户的基本信息（包括：用户头像，上次登录时间），好友关系（正向 我关注的人，反向关注我的人）</p>
+</blockquote>
+
+<h4>mysql的方式：</h4>
+
+<ul>
+<li>用户信息表</li>
+</ul>
+
+
+        <div class="more">
+          <a href="/hbase/hbase-orm%E4%B8%AD%E9%97%B4%E5%B1%82hbasedao/" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
+        <h1 class="title"><a href="/mac/os-x10.9%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E5%8D%87%E7%BA%A7svn1.8/">os x10.9源码编译升级svn1.8</a> <span class="date">2013-10-10</span></h1>
+
+        <p>之前升级了开发者预览版的冲浪胜地os x 10.9，发现xcode里command line tools附带的svn版本是1.7，自己很多的代码工程都是svn1.8的版本，所以需要升级svn版本到1.8。但是尝试了几种方法，发现并不是很容易，折腾了几个小时的时间，下面把过程记录如下，方便后来者。</p>
+
+<p>首先想到的是，升级最新的xcode5.0，这样就可以使用最新的command line tools，开始时，这种方法是凑效的，升级xcode5.0后， svn确实是1.8了。但是过了没多久，系统提示升级xcode，升级之后发现，svn版本又退回到1.7。在尝试升级command line tools无果，所以尝试别的办法。</p>
+
+<p>从subversion官网下载二进制的安装包，但是只有os x 10.8的，安装到一半继续不下去，此路也不通。</p>
+
+<p>最后尝试svn源码编译，步骤如下：</p>
+
+<ol>
+<li>从<a href="http://subversion.apache.org/download/">官网</a>下载subversion-1.8.3.tar.gz（zip的试过不行），然后<code>tar -xvf subversion-1.8.3</code>解压缩。</li>
+<li>编译源码</li>
+</ol>
+
+<pre><code>cd subversion-1.8.3
+./configure --with-ssl
+make
+sudo make install
+</code></pre>
+
+<ol>
+<li>建立软链接</li>
+</ol>
+
+
+        <div class="more">
+          <a href="/mac/os-x10.9%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E5%8D%87%E7%BA%A7svn1.8/" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
+        <h1 class="title"><a href="/go/coding4fun%E4%BB%A3%E7%A0%81%E6%AF%94%E8%B5%9B%E5%B0%8F%E7%BB%93/">coding4fun代码比赛小结</a> <span class="date">2013-08-27</span></h1>
+
+        <p>上周参加coding4fun的小比赛，赛题的大致意思就是充分利用多核CPU，看谁开发的程序最快。对于这类题目，语言的选择上就显得很重要，因为对于同样的算法，在都做了充分的优化的情况下，就剩下纯粹的比拼语言的执行效率了。</p>
+
+<p>所以我选择了用go，可能有些同学还不太了解，首先看一下go语言的显著的几个特点：</p>
+
+<p>1.和c\c++一样都是编译型语言，直接编译成本地机器码执行，官方所说执行效率逼近c</p>
+
+<p>2.语言自带垃圾回收，编译时编译进运行时</p>
+
+<p>3.语言内建协程，以非常廉价的方式实现并行</p>
+
+<p>4.编程多范式支持，可以既面向过程又面向对象，还可以函数式编程</p>
+
+<ul>
+<li>下面简单说一下我的思路:</li>
+</ul>
+
+<p>1.我使用的字典树的数据结构，这种数据结构对于小文本的来说是比较有利的，后面换成大文本，字典树就有些力不从心了。基本结构就是一个节点代表一个字符，里面包含从这个节点向上遍历形成的单词的count。</p>
+
+<pre><code>type CharTreeNode struct {
+    Count    int
+    Children [26]*CharTreeNode
+}
+</code></pre>
+
+
+        <div class="more">
+          <a href="/go/coding4fun%E4%BB%A3%E7%A0%81%E6%AF%94%E8%B5%9B%E5%B0%8F%E7%BB%93/" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
+        <h1 class="title"><a href="/raspberry/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E5%8F%8A%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC%E7%9A%84%E5%88%B6%E4%BD%9C/">树莓派开机启动程序及启动脚本的制作</a> <span class="date">2013-08-24</span></h1>
+
+        <p>网上有不少关于如何让Linux自动运行自己编写的脚本或者程序的方法，但是大多数都是把命令写到/etc/rc.local里，这样虽然能够实现随机运行，但是并不够灵活。不能像mysql，apache等服务一样能够使用service命令或者调用init.d下的脚本启动、关闭或者重启进程。例如，</p>
+
+<p>service mysql restart
+service apache2 stop</p>
+
+<p>或者</p>
+
+<p>/etc/init.d/mysql restart
+/etc/init.d/apache2 stop</p>
+
+<p>因为不同的Linux发行版本，对后台服务的处理方式不大一样，如redhat使用chkconfig来管理开机程序。所以下面的方法以debian类系统为例，如何写一个简单的开机启动脚本。所以，此方法适用于raspbian pi的系统。</p>
+
+<p>以svn为例：</p>
+
+<p>1.制作开机启动脚本svn_serve</p>
+
+<pre><code>#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          svn_serve
+# Required-Start:    $remote_fs
+# Required-Stop:     $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start or stop the HTTP Proxy.
+### END INIT INFO
+
+case $1 in
+    start)
+        svnserve -d -r /home/pi/svn_repository
+        ;;
+    stop)
+        killall svnserve
+        ;;
+*)
+echo &quot;Usage: $0 (start|stop)&quot;
+;;
+esac
+</code></pre>
+
+
+        <div class="more">
+          <a href="/raspberry/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E7%A8%8B%E5%BA%8F%E5%8F%8A%E5%90%AF%E5%8A%A8%E8%84%9A%E6%9C%AC%E7%9A%84%E5%88%B6%E4%BD%9C/" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
+        <h1 class="title"><a href="/go/go%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E4%BC%A0%E9%80%92%E6%95%B0%E7%BB%84%E5%88%87%E7%89%87slice/">go递归函数如何传递数组切片slice</a> <span class="date">2013-08-18</span></h1>
+
+        <p>数组切片slice这个东西看起来很美好，真正用起来会发现有诸多的不爽。</p>
+
+<p>第一，数组、数组切片混淆不清，使用方式完全一样，有时候一些特性又完全不一样，搞不清原理很容易误使用。</p>
+
+<p>第二，数组切片的append操作，每次对slice append操作，都返回一个新的slice的引用，对slice的引用没法保持，这样在函数传递slice的情况下append，在调用函数的上下文中看不到slice append的效果。如果想要这种方式凑效，不得不另辟蹊径。本文主要说一下如何解决这个窘境的方法。</p>
+
+<p>函数传递slice存在什么问题？</p>
+
+<pre><code>func sliceModify(slice []int) {
+    // slice[0] = 88
+    slice = append(slice, 6)
+}
+func main() {
+    slice := []int{1, 2, 3, 4, 5}
+    sliceModify(slice)
+    fmt.Println(slice)
+}
+</code></pre>
+
+
+        <div class="more">
+          <a href="/go/go%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0%E5%A6%82%E4%BD%95%E4%BC%A0%E9%80%92%E6%95%B0%E7%BB%84%E5%88%87%E7%89%87slice/" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
+        <h1 class="title"><a href="/go/go-slice%E5%92%8C%E6%95%B0%E7%BB%84%E7%9A%84%E5%8C%BA%E5%88%AB/">go slice和数组的区别</a> <span class="date">2013-08-17</span></h1>
+
+        <p>1.使用方式</p>
+
+<p>数组和slice长的很像，操作方式也都差不多，并且slice包含了数组的基本的操作方式，如下标、range循环，还有一些如len()则是多种类型共用，所以根据操作根本搞不清数组和切片的区别，能够看出区别的地方主要看如何声明的。</p>
+
+<p>数组的声明方式很单一，通常就是下面这样：</p>
+
+<pre><code>array1 := [5]int{1, 2, 3, 4, 5}
+array2 := [5]int{}
+</code></pre>
+
+<p>slice的声明方式就非常多样了，如前面介绍的几种：</p>
+
+<pre><code>var slice1 = []int{1, 2, 3, 4, 5}
+var slice2 = make([]int, 0, 5)
+var slice3 = make([]int, 5, 5)
+var slice4 = make([]int, 5)
+</code></pre>
+
+<p>加上对数组的切片和append操作都会产生数组切片(slice)</p>
+
+
+        <div class="more">
+          <a href="/go/go-slice%E5%92%8C%E6%95%B0%E7%BB%84%E7%9A%84%E5%8C%BA%E5%88%AB/" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
+        <h1 class="title"><a href="/go/go%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%E5%88%87%E7%89%87slice/">go语言中的数组切片slice</a> <span class="date">2013-08-16</span></h1>
+
+        <p>初看go语言中的slice，觉得是可变数组的一种很不错的实现，直接在语言语法的层面支持，操作方面比起java中的ArrayList方便了许多。但是在使用了一段时间后，觉得这东西埋的坑不少，使用方式上和arrayList也有很大的不同，在使用时要格外注意。</p>
+
+<h2>slice的数据结构</h2>
+
+<p>首先说一下slice的数据结构，源码可以在google code上找到，<a href="http://code.google.com/p/go/source/browse/src/pkg/runtime/runtime.h">http://code.google.com/p/go/source/browse/src/pkg/runtime/runtime.h</a></p>
+
+<pre><code>struct Slice
+{                          
+    byte*   array;  // actual data
+    uintgo  len;    // number of elements
+    uintgo  cap;    // allocated number of elements
+};
+</code></pre>
+
+<p>可以看出主要保存了三个信息：</p>
+
+<ul>
+<li>一个指向原生数组的指针</li>
+<li>元素的个数</li>
+<li>数组分配的存储空间</li>
+</ul>
+
+
+        <div class="more">
+          <a href="/go/go%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%E5%88%87%E7%89%87slice/" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+      <div class="post">
+        <h1 class="title"><a href="/go/go%E5%AE%9E%E7%8E%B0%E6%8E%92%E5%BA%8F%E7%9A%84%E9%93%BE%E8%A1%A8/">go实现排序的链表</a> <span class="date">2013-08-14</span></h1>
+
+        <p>链表的数据结构比较线性数组，优点是 可以方便的对任意的位置进行插入和删除。</p>
+
+<p>这一特性使得它很适合于应用在排序等场景下，由于golang目前类库还不是很完善，在java中可以很简单的使用api提供的支持完成对list或者map的排序，在使用go时就没有那么幸运了，可能需要自己去实现。</p>
+
+<p>下面的例子就是使用go package 中的LinkedList实现的排序的链表。</p>
+
+<ul>
+<li>有几个功能特性：</li>
+</ul>
+
+<p>1.支持固定的长度</p>
+
+<p>2.可自定义排序的规则</p>
+
+<p>3.组合LinkedList功能</p>
+
+<pre><code class="go">package codeforfun
+import (
+    &quot;container/list&quot;
+)
+type SortedLinkedList struct {
+    *list.List
+    Limit int
+    compareFunc func (old, new interface{}) bool
+}
+func NewSortedLinkedList(limit int, compare func (old, new interface{}) bool) *SortedLinkedList {
+    return &amp;SortedLinkedList{list.New(), limit, compare}
+}
+func (this SortedLinkedList) findInsertPlaceElement(value interface{}) *list.Element {
+    for element := this.Front(); element != nil; element = element.Next() {
+        tempValue := element.Value
+        if this.compareFunc(tempValue, value) {
+            return element
+        }
+    }
+    return nil
+}
+func (this SortedLinkedList) PutOnTop(value interface{}) {
+    if this.List.Len() == 0 {
+        this.PushFront(value)
+        return
+    }
+    if this.List.Len() &lt; this.Limit &amp;&amp; this.compareFunc(value, this.Back().Value) {
+        this.PushBack(value)
+        return
+    }
+    if this.compareFunc(this.List.Front().Value, value) {
+        this.PushFront(value)
+    } else if this.compareFunc(this.List.Back().Value, value) &amp;&amp; this.compareFunc(value, this.Front().Value) {
+        element := this.findInsertPlaceElement(value)
+        if element != nil {
+            this.InsertBefore(value, element)
+        }
+    }
+    if this.Len() &gt; this.Limit {
+        this.Remove(this.Back())
+    }
+}
+</code></pre>
+
+
+        <div class="more">
+          <a href="/go/go%E5%AE%9E%E7%8E%B0%E6%8E%92%E5%BA%8F%E7%9A%84%E9%93%BE%E8%A1%A8/" class="btn btn-small">阅读全文</a>
+        </div>
+      </div>
+    
+
+    <div class="pagination">
+      <ul>
+      
+        
+          <li class="active"><a href="/posts/1/">1</a></li>
+        
+        
+      
+        
+        
+          <li><a href="/posts/2/">2</a></li>
+        
+      
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+    </div>
+
+    <footer>
+        <p>&copy; mahang 2013
+            with help from <a href="http://github.com/wendal/gor" target="_blank" title="Gor -- Fast Blog">Gor</a>
+            and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+            and Idea from <a href="http://ruhoh.com" target="_blank" title="The Definitive Technical Blogging Framework">ruhoh</a>
+	</p>
+	<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cdiv align='center' id='cnzz_stat_icon_1000037964'%3E%3C/div%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1000037964%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+    </footer>
+
+</div> <!-- /container -->
+
+<script src="/assets/twitter/javascripts/prettify.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint linenums";
+  }
+  prettyPrint();
+</script>
+
+<script>
+    var _gaq=[['_setAccount','UA-123-12'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+
+</body>
+</html>
